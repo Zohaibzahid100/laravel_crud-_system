@@ -13,3 +13,6 @@ Route::get('/read',[studentcontrollers::class , 'show'])->name('read');
 Route::delete('/delete/{id}' , [studentcontrollers::class , 'destroy'])->name('deletedata');
 Route::get('/edit/{id}' , [studentcontrollers::class , 'edit'])->name('edit');
 Route::put('/edit/{id}' , [studentcontrollers::class , 'update'])->name('update');
+Route::get('/trash', [studentcontrollers::class , 'trash'])->name('trashdata');
+Route::get('/restore/{id} ', [studentcontrollers::class , 'restore'])->name('restore');
+Route::delete('/force/{id}', [studentcontrollers::class , 'forceDelete'])->name('forcdelete');

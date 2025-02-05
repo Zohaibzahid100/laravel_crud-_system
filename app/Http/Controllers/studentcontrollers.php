@@ -81,7 +81,45 @@ class studentcontrollers extends Controller
          return redirect('create')->with('fail','data not updated');
        }
    }
+
+  public function trash(){
+    $student = student::onlyTrashed()->get();
+
+    return view('trash',compact('student'));
+  }
     
-   
+  public function restore($id){
+    // echo $id;
+    $students = student::withTrashed()->find($id);
+    $students->restore();
+    return redirect('read')->with('success' ,'data restore successfuly');
+
+  }
+  // public function forceDelete($id){
+  
+  //   $student = student::withTrashed()->find($id);
+  //   $student->forceDelete();
+  //   return redirect( route('fordelete'))->with('success' , 'data was permenent deldted');
+
+
+  // }
+  // public function forceDelete($id){
+  //   $student = student::withTrashed()->find($id);
+  //   $student->forceDelete();
+  //   return redirect(route('forcdelete'));
+
+  // }
+  public function forcedelete($id)
+  {
+      $student = Student::withTrashed()->find($id);  
+  
+      if (!$student) {
+          return redirect()->route('trashdata')->with('error', 'Student not found.');
+      }
+  
+      $student->forceDelete();  
+      return redirect()->route('trashdata')->with('success', 'Student deleted permanently.');
+  }
+  
 
 }

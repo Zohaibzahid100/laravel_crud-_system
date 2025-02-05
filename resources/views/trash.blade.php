@@ -22,12 +22,12 @@
     margin-bottom:3rem;
   }
 </style>
-<body>
 <div class="container">
     <h1 class='mt-5'  style='color:white;text-align:center; font-weight:bolder;'>
-    STUDENT READ DATA 
+    STUDENT TRASHED DATA 
     </h1>
 </div>
+<body>
   <div class="container mt-5">
   @if(session()->has('success'))
             <div class="alert alert-success hello" role="alert">
@@ -42,9 +42,10 @@
          @endforeach
          @endif
   </div>
-  <div class='container' style='text-align:center;'>
-   <button class='btn btn-dark '><a href="{{ route('trashdata')}}"  style='color:white; font-weight:bolder;text-decoration:none; font-size:30px'> Go to Trash</a></button>
+  <div class='container mt-4' style='text-align:center;'>
+   <button class='btn btn-dark ' ><a href="{{ route('read')}}"  style='color:white; font-weight:bolder;text-decoration:none; font-size:30px'> Go to read</a></button>
   </div>
+ 
   <div class="container-fluid" style='padding:30px;' >
 <table class="table " style='border:1px solid black ;' >
   <thead class="bg-dask ">
@@ -54,27 +55,28 @@
       <th scope="col">Phone</th>
       <th scope="col">Course Enrolls</th>
       <th scope="col">Date Of Birth</th>
-      <th scope="col">Update</th>
+      <th scope="col">Restore</th>
       <th scope="col">Delete</th>
 
     </tr>
   </thead>
   <tbody>
-    @foreach($students as $student)
-    <tr>
-        <td>{{ $student->studnet_name}}</td>
-        <td>{{ $student->studnet_email}}</td>
-        <td>{{ $student->studnet_phone}}</td>
-        <td>{{ $student->studnet_course_enrolls}}</td>
-        <td>{{ $student->studnet_db}}</td>
-        <td>  <a href="{{route('edit' , $student->id)}}"><button class='btn btn-primary'> update </button></a></td>
+    @foreach($student as $students)
+    <trs>
+        <td>{{ $students->studnet_name}}</td>
+        <td>{{ $students->studnet_email}}</td>
+        <td>{{ $students->studnet_phone}}</td>
+        <td>{{ $students->studnet_course_enrolls}}</td>
+        <td>{{ $students->studnet_db}}</td>
+        <td>  <a href="{{route('restore', $students->id)}};"><button class='btn btn-success'> Restore </button></a></td>
         <td >
-          <div style='display:flex; padding2rem' >
-          <form method='post' action='{{ route("deletedata", $student->id)}}'>          
+        <form method='post' action="{{ route('forcdelete', $students->id) }}">          
           @csrf
-          @method('delete')
-          <button class='btn btn-danger '>delete</button>
+          @method('DELETE')
+          <button class='btn btn-danger '>Permenent delete</button>
         </form>
+          <div style='display:flex; padding2rem' >
+       
       
         </div>
       </td>
